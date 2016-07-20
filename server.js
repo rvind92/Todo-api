@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var _ = require('underscore');
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -7,6 +8,7 @@ var todos = [];
 var todoNextId = 1;
 
 app.use(bodyParser.json());
+app.use(_);
 
 app.get('/', function(request, response) {
 	response.send('Todo API Root');
@@ -20,13 +22,14 @@ app.get('/todos', function(request, response) {
 // GET /todos/:id
 app.get('/todos/:id', function(request, response) {
 	var todoId = parseInt(request.params.id, 10);
-	var matchedTodo;
+	var matchedTodo = _.findWhere(todos, {id: todoId});
+	// var matchedTodo;
 
-	todos.forEach(function(todo) {
-		if(todoId === todo.id) {
-			matchedTodo = todo;
-		}
-	});
+	// todos.forEach(function(todo) {
+	// 	if(todoId === todo.id) {
+	// 		matchedTodo = todo;
+	// 	}
+	// });
 
 	if(matchedTodo) {
 		response.send(matchedTodo);
