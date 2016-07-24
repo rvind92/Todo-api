@@ -8,7 +8,6 @@ var todos = [];
 var todoNextId = 1;
 
 app.use(bodyParser.json());
-// app.use(_);
 
 app.get('/', function(request, response) {
 	response.send('Todo API Root');
@@ -40,7 +39,15 @@ app.get('/todos/:id', function(request, response) {
 
 // POST /todos/:id
 app.post('/todos', function(request, response) {
-	var body = request.body;
+	// var body = request.body;
+	var body = _.pick(request.body, 'description', 'completed');
+
+	if(!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
+		return response.status(400).send();
+	}
+
+	// set body.description to be trimmed value
+	body.description = body.description.trim();
 
 	// add id field
 	body.id = todoNextId;
