@@ -13,9 +13,22 @@ app.get('/', function(request, response) {
 	response.send('Todo API Root');
 });
 
-// GET /todos
+// GET /todos?completed=true
 app.get('/todos', function(request, response) {
-	response.json(todos);
+	var queryParams = request.query;
+	var filteredTodos = todos;
+
+	if(queryParams.hasOwnProperty('completed') && queryParams.completed === 'true') {
+		filteredTodos = _.where(filteredTodos, {completed: true});
+	} else if (queryParams.hasOwnProperty('completed') && queryParams.completed === 'false') {
+		filteredTodos = _.where(filteredTodos, {completed: false});
+	}
+
+	// if has property && completed === 'true'
+	// filteredTodos = ._where(filteredTodos, ?)
+	// else if has prop && completed if 'false'
+
+	response.json(filteredTodos);
 });
 
 // GET /todos/:id
