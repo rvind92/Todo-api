@@ -90,7 +90,7 @@ app.get('/todos/:id', function(request, response) {
 
 // POST /todos/:id
 app.post('/todos', function(request, response) {
-	// var body = request.body;
+
 	var body = _.pick(request.body, 'description', 'completed');
 
 	db.todo.create(body).then(function(todo) {
@@ -98,20 +98,7 @@ app.post('/todos', function(request, response) {
 	}, function(e) {
 		response.status(400).json(e);
 	});
-	// if(!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
-	// 	return response.status(400).send();
-	// }
-
-	// // set body.description to be trimmed value
-	// body.description = body.description.trim();
-
-	// // add id field
-	// body.id = todoNextId;
-	// todoNextId++;
-	// // push body into array
-	// todos.push(body);
-
-	// response.json(body);
+	
 });
 
 // DELETE /todos/:id
@@ -135,44 +122,21 @@ app.delete('/todos/:id', function(request, response) {
 		response.status(500).send();
 	});
 
-	// var matchedTodo = _.findWhere(todos, {id: todoId});
-
-	// if(!matchedTodo) {
-	// 	response.status(404).json({"error": "no todo found with that id"});
-	// } else {
-	// 	todos = _.without(todos, matchedTodo);
-	// 	response.json(matchedTodo);
-	// }
 });
 
 app.put('/todos/:id', function(request, response) {
 	var todoId = parseInt(request.params.id, 10);
-	// var matchedTodo = _.findWhere(todos, {id: todoId});
+
 	var body = _.pick(request.body, 'description', 'completed');
 	var attributes = {};
-	// var validAttributes = {};
 
-	// if(!matchedTodo) {
-	// 	response.status(404).json({"error": "no todo found with that id"});
-	// }
-	// // body.hasOwnProperty('completed');
 	if(body.hasOwnProperty('completed')) {
 		attributes.completed = body.completed;
 	}
-	//  else if(body.hasOwnProperty('completed')) {
-	// 	return response.status(400).send();
-	// }
 
 	if(body.hasOwnProperty('description')) {
 		attributes.description = body.description;
 	} 
-	// else if(body.hasOwnProperty('description')) {
-	// 	return response.status(400).send();
-	// }
-
-	// HERE
-	// _.extend(matchedTodo, attributes);
-	// response.json(matchedTodo);
 
 	db.todo.findById(todoId).then(function(todo) {
 		if(todo) {
@@ -188,6 +152,16 @@ app.put('/todos/:id', function(request, response) {
 		response.status(500).send();
 	});
 });
+
+app.post("/users", function (request, response) {
+	var body = _.pick(request.body, 'email', 'password');
+
+	db.user.create(body).then(function(user) {
+		response.json(user.toJSON());
+	}, function(e) {
+		response.status(400).json(e);
+	});
+})
 
 db.sequelize.sync().then(function() {
 	app.listen(PORT, function() {
