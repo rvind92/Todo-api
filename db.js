@@ -12,10 +12,10 @@ if(env === 'production') {
 	'storage': __dirname + '/data/dev-todo-api.sqlite'
 });
 }
-// var sequelize = new Sequelize(undefined, undefined, undefined, {
-// 	'dialect': 'sqlite',
-// 	'storage': __dirname + '/data/dev-todo-api.sqlite'
-// });
+var sequelize = new Sequelize(undefined, undefined, undefined, {
+	'dialect': 'sqlite',
+	'storage': __dirname + '/data/dev-todo-api.sqlite'
+});
 
 var db = {};
 
