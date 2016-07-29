@@ -71,7 +71,7 @@ app.get('/todos/:id', function(request, response) {
 			response.status(404).send();
 		}
 	}, function(e) {
-		response.status(500).send();
+		response.status(500).send({error : 'Nothing to see here!'});
 	});
 	// var matchedTodo = _.findWhere(todos, {id: todoId});
 	// // var matchedTodo;
