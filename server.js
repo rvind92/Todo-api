@@ -171,13 +171,20 @@ app.post('/users/login', function(request, response) {
 	var body = _.pick(request.body, 'email', 'password');
 
 	db.user.authenticate(body).then(function(user) {
-		response.json(user.toPublicJSON());
+		var token = user.generateToken('authentication');
+
+		if(token) {
+			response.header('Auth', token).json(user.toPublicJSON());
+		} else {
+			response.status(401).send();
+		}
+		
 	}, function(e) {
 		response.status(401).send();
 	});
 });
 
-db.sequelize.sync({force: true}).then(function() {
+db.sequelize.sync().then(function() {
 	app.listen(PORT, function() {
 		console.log('Express listening on port ' + PORT + '!');
 	});
