@@ -68,13 +68,8 @@ module.exports = function(sequelize, DataTypes) {
 				return new Promise(function(resolve, reject) {
 					try {
 						var decodedJWT = jwt.verify(token, 'qwerty123');
-<<<<<<< HEAD
 						var bytes = cryptojs.AES.decrypt(decodedJWT.token, 'abcd1234');
 						var tokenData = JSON.parse(bytes.toString(cryptojs.enc.Utf8));
-=======
-						var bytes = cryptojs.AES.decrypt(decodedJWT.token, 'abdd1234');
-						var tokenData =  JSON.parse(bytes.toString(cryptojs.enc.Utf8));
->>>>>>> bb89c4bd80f246e6ba41dfb0ed8f36d289ce954f
 
 						user.findById(tokenData.id).then(function(user) {
 							if(user) {
@@ -83,10 +78,7 @@ module.exports = function(sequelize, DataTypes) {
 								reject();
 							}
 						}, function(e) {
-<<<<<<< HEAD
 							console.log(e);
-=======
->>>>>>> bb89c4bd80f246e6ba41dfb0ed8f36d289ce954f
 							reject();
 						});
 					} catch(e) {

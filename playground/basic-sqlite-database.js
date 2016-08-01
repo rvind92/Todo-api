@@ -39,19 +39,20 @@ sequelize.sync({
 		}).then(function(todos) {
 			todos.forEach(function(todo) {
 				console.log(todo.toJSON());
-			})
-		})
+			});
+		});
 	});
 
 	// User.create({
-	// 	email: 'rvind92@gmail.com'
+	// 	email: 'rvind@gmail.com'
 	// }).then(function() {
 	// 	return Todo.create({
-	// 		description: "Drive car"
+	// 		description: 'Clean yard'
 	// 	});
 	// }).then(function(todo) {
 	// 	User.findById(1).then(function(user) {
 	// 		user.addTodo(todo);
 	// 	});
 	// });
+
 });
