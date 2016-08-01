@@ -3,7 +3,11 @@ var bodyParser = require('body-parser');
 var _ = require('underscore');
 var db = require('./db.js');
 var bcrypt = require('bcrypt');
+<<<<<<< HEAD
 var middleware = require('./middleware.js')(db);
+=======
+var middleware = require('./middleware')(db);
+>>>>>>> bb89c4bd80f246e6ba41dfb0ed8f36d289ce954f
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -153,7 +157,17 @@ app.post('/users/login', function(request, response) {
 	});
 });
 
+<<<<<<< HEAD
 db.sequelize.sync({force: true}).then(function() {
+=======
+app.get('/data.html', function(request, response) {
+	response.send();
+});
+
+app.use(express.static(__dirname + '/public'));
+
+db.sequelize.sync().then(function() {
+>>>>>>> bb89c4bd80f246e6ba41dfb0ed8f36d289ce954f
 	app.listen(PORT, function() {
 		console.log('Express listening on port ' + PORT + '!');
 	});
