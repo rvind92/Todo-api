@@ -185,6 +185,12 @@ app.post('/users/login', function(request, response) {
 	});
 });
 
+app.get('/data.html', function(request, response) {
+	response.send();
+});
+
+app.use(express.static(__dirname + '/public'));
+
 db.sequelize.sync().then(function() {
 	app.listen(PORT, function() {
 		console.log('Express listening on port ' + PORT + '!');
